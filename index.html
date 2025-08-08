@@ -81,19 +81,66 @@
         }
 
         /* Navigation */
+        nav {
+            position: relative;
+        }
+
+        .toggle-nav {
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .toggle-nav i {
+            transition: transform 0.3s ease;
+        }
+
+        nav.collapsed ul {
+            max-height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        nav.collapsed .toggle-nav i {
+            transform: rotate(180deg);
+        }
+
         nav ul {
-    display: flex;
-    list-style: none;
-    margin-top: 20px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 8px;
-    justify-content: center; /* Add this line */
-}
+            display: flex;
+            list-style: none;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 8px;
+            justify-content: center;
+            transition: all 0.5s ease;
+            max-height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
 
         nav li {
-    margin: 0 8px; /* Reduce spacing between tabs */
-}
+            margin: 0 8px;
+        }
+        
         nav a {
             color: white;
             text-decoration: none;
@@ -503,6 +550,11 @@
             .hero p {
                 font-size: 1.2rem;
             }
+
+            .toggle-nav {
+                right: 10px;
+                bottom: -15px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -513,6 +565,12 @@
             
             nav li {
                 margin: 5px 0;
+            }
+            
+            .toggle-nav {
+                width: 30px;
+                height: 30px;
+                bottom: -12px;
             }
         }
     </style>
@@ -532,7 +590,7 @@
                 </div>
             </div>
             
-            <nav>
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#profile"><i class="fas fa-user"></i> Profile</a></li>
                     <li><a href="#skills"><i class="fas fa-cogs"></i> Skills</a></li>
@@ -540,6 +598,9 @@
                     <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
                     <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
                 </ul>
+                <button class="toggle-nav" aria-label="Toggle navigation">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -859,6 +920,23 @@
             card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(card);
         });
+
+        // Toggle navigation
+        const toggleNav = document.querySelector('.toggle-nav');
+        const mainNav = document.getElementById('main-nav');
+        
+        toggleNav.addEventListener('click', function() {
+            mainNav.classList.toggle('collapsed');
+            
+            // Store the state in localStorage
+            const isCollapsed = mainNav.classList.contains('collapsed');
+            localStorage.setItem('navCollapsed', isCollapsed);
+        });
+        
+        // Check localStorage for saved state
+        if (localStorage.getItem('navCollapsed') === 'true') {
+            mainNav.classList.add('collapsed');
+        }
     </script>
 </body>
 </html>
