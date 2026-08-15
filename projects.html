@@ -3,190 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Files | Jaynilson Lopes</title>
-    
-    <!-- Google Fonts for Dossier Typewriter & Authentic Handwriting -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Special+Elite&display=swap" rel="stylesheet">
-
+    <title>Project Explorer | Jaynilson Lopes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* The Desk (Background) */
-        body {
-            /* Matched to the main page dark blue gradient */
-            background: linear-gradient(to bottom, #0f2a4a, #2c4a68); 
-            background-attachment: fixed;
-            font-family: 'Special Elite', 'Courier New', monospace; /* Updated Font */
-            margin: 0;
-            padding: 40px 20px;
-            color: #333;
+        /* OS Desktop Background */
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
         }
 
-        /* The Manila Folder Container */
-        .folder-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
+        /* The File Explorer Window */
+        .window { 
+            width: 90%; 
+            max-width: 1100px; 
+            height: 85vh; 
+            background-color: #202020; 
+            border: 1px solid #444; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6); 
         }
 
-        /* The Folder Tab */
-        .folder-tab {
-            background-color: #e6c875; /* Classic Manila color */
-            width: 220px;
-            height: 45px;
-            border-radius: 12px 12px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #4a3b14;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 1px solid #cfaa54;
-            border-bottom: none;
-            box-shadow: inset 0 2px 5px rgba(255,255,255,0.4);
+        /* Top Title Bar */
+        .title-bar { 
+            height: 35px; 
+            background-color: #181818; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 15px; 
+            font-size: 13px; 
+            user-select: none; 
+            border-bottom: 1px solid #000; 
         }
+        .title-bar-text { flex-grow: 1; display: flex; align-items: center; gap: 8px; }
+        .title-bar-controls { display: flex; gap: 15px; color: #aaa; }
+        .title-bar-controls i:hover { color: #fff; cursor: pointer; }
 
-        /* The Main Folder Body */
-        .folder-body {
-            background-color: #e6c875;
-            border-radius: 0 12px 12px 12px;
-            padding: 50px 40px;
-            box-shadow: 10px 15px 30px rgba(0,0,0,0.5);
-            min-height: 600px;
-            position: relative;
-            border: 1px solid #cfaa54;
+        /* Toolbar / Address Bar */
+        .toolbar { 
+            height: 45px; 
+            background-color: #202020; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 15px; 
+            border-bottom: 1px solid #333; 
+            gap: 15px; 
         }
-
-        /* Header & Navigation inside the folder */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 40px;
-            border-bottom: 2px dashed #cfaa54;
-            padding-bottom: 20px;
+        .address-bar { 
+            background-color: #191919; 
+            padding: 6px 15px; 
+            border-radius: 4px; 
+            border: 1px solid #333; 
+            flex-grow: 1; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 14px; 
+            color: #ccc;
         }
-
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #3a2e0f;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: #6a5621;
-            margin-top: 5px;
-        }
-
-        /* Back to Resume Button */
+        
         .back-btn {
-            background-color: #3a2e0f;
-            color: #e6c875;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: 0.2s ease-in-out;
+            color: white; 
+            text-decoration: none; 
+            padding: 6px 12px; 
+            background: #0078d4; 
+            border-radius: 4px; 
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .back-btn:hover { background: #005a9e; }
+
+        /* Layout Structure */
+        .main-area { display: flex; flex-grow: 1; overflow: hidden; }
+        
+        /* Left Sidebar */
+        .sidebar { 
+            width: 250px; 
+            border-right: 1px solid #333; 
+            padding: 10px 0; 
+            overflow-y: auto; 
+            font-size: 14px; 
+            background-color: #202020;
+        }
+        .sidebar-item { 
+            padding: 8px 20px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: #ccc;
+        }
+        .sidebar-item:hover { background-color: #2d2d2d; }
+        .sidebar-item.active { background-color: #2d2d2d; color: #fff; border-left: 3px solid #0078d4; }
+        
+        /* Main Content Grid */
+        .content-area { 
+            flex-grow: 1; 
+            padding: 20px; 
+            overflow-y: auto; 
+            background-color: #191919; 
+        }
+        .file-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+            gap: 15px; 
+        }
+        .file-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            cursor: pointer; 
+            padding: 15px 10px; 
+            border-radius: 4px; 
+            border: 1px solid transparent; 
+            transition: 0.1s;
+        }
+        .file-item:hover { background-color: #2d2d2d; border-color: #444; }
+        .file-icon { 
+            width: 90px; 
+            height: 90px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 10px; 
+        }
+        .file-icon img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            border-radius: 4px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .file-name { 
+            font-size: 13px; 
+            color: #ccc; 
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .back-btn:hover {
-            background-color: #1a1405;
-            color: #fff;
+        /* Status Messages */
+        .loading { grid-column: 1 / -1; text-align: center; color: #888; padding: 40px; font-size: 15px; }
+
+        /* Full Screen Photo Viewer Modal */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 1000; 
+            backdrop-filter: blur(5px);
         }
-
-        /* The Photo Gallery Grid */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        /* Individual Photo Styling (Polaroid look) */
-        .photo-card {
-            background: #fff;
-            padding: 15px 15px 40px 15px; /* Extra padding on bottom for the label */
-            box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
-            border-radius: 2px;
-            text-align: center;
-            transition: transform 0.2s ease-in-out;
-            position: relative;
-        }
-
-        /* Slight random rotations to look like scattered photos */
-        .photo-card:nth-child(odd) { transform: rotate(-2deg); }
-        .photo-card:nth-child(even) { transform: rotate(3deg); }
-        .photo-card:hover { transform: rotate(0deg) scale(1.05); z-index: 10; box-shadow: 5px 8px 15px rgba(0,0,0,0.3); }
-
-        /* The actual images */
-        .photo-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #ddd; /* Placeholder color if image is missing */
-            border: 1px solid #eee;
-        }
-
-        /* Handwritten-style labels for the photos */
-        .photo-label {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            font-family: 'Caveat', cursive; /* Updated Font */
-            font-size: 1.4rem; 
-            color: #333;
-        }
-
-        /* Responsive adjustments for mobile */
-        @media (max-width: 600px) {
-            header { flex-direction: column; gap: 20px; }
-            .folder-body { padding: 30px 20px; }
-            .folder-tab { width: 180px; font-size: 1rem; }
+        .modal.active { display: flex; }
+        .modal img, .modal video { max-width: 90%; max-height: 90%; border-radius: 4px; box-shadow: 0 5px 25px rgba(0,0,0,0.8); }
+        .close-modal { position: absolute; top: 20px; right: 30px; font-size: 40px; color: #ccc; cursor: pointer; transition: 0.2s;}
+        .close-modal:hover { color: #fff; transform: scale(1.1); }
+        
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .window { width: 100%; height: 100vh; border-radius: 0; border: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="folder-container">
-        <div class="folder-tab">
-            PROJECT FILES
+    <div class="window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <i class="fas fa-folder-open" style="color: #e6c875;"></i> Projects
+            </div>
+            <div class="title-bar-controls">
+                <i class="fas fa-minus"></i>
+                <i class="far fa-window-maximize"></i>
+                <i class="fas fa-times"></i>
+            </div>
         </div>
 
-        <div class="folder-body">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <i class="fas fa-arrow-left" style="color: #666;"></i>
+            <i class="fas fa-arrow-right" style="color: #666;"></i>
+            <i class="fas fa-arrow-up" style="color: #aaa;"></i>
+            <i class="fas fa-sync-alt" style="color: #aaa; cursor: pointer;" onclick="loadFiles()" title="Refresh Folder"></i>
             
-            <header>
-                <div>
-                    <h1>Jaynilson Lopes</h1>
-                    <div class="subtitle">Project & Fabrication Gallery</div>
-                </div>
-                <a href="https://jaynilson123.github.io/jaynilsonlopes.github.io/" class="back-btn">← Back to Resume</a>
-            </header>
-
-            <div class="gallery-grid">
-                
-                <div class="photo-card">
-                    <img src="c-clamp.jpg" alt="Machine Shop C-Clamp">
-                    <div class="photo-label">Machine Shop C-Clamp</div>
-                </div>
-
-                <div class="photo-card">
-                    <img src="transmission.jpg" alt="Transmission Case Study">
-                    <div class="photo-label">Nissan Transmission Study</div>
-                </div>
-
-                <div class="photo-card">
-                    <img src="solar-project.jpg" alt="Solar O&M">
-                    <div class="photo-label">Solar O&M Prep</div>
-                </div>
-
+            <div class="address-bar">
+                <i class="fas fa-desktop" style="color: #4daafc;"></i> > This PC > GitHub > Media > Projects
             </div>
+            
+            <a href="index.html" class="back-btn"><i class="fas fa-home"></i> Main Website</a>
+        </div>
 
+        <!-- Main Layout -->
+        <div class="main-area">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar">
+                <div class="sidebar-item"><i class="fas fa-star" style="color: #e6c875;"></i> Quick access</div>
+                <div class="sidebar-item"><i class="fas fa-desktop" style="color: #4daafc;"></i> This PC</div>
+                <div style="padding-left: 20px;">
+                    <div class="sidebar-item"><i class="fas fa-images" style="color: #4daafc;"></i> Pictures</div>
+                    <div class="sidebar-item"><i class="fas fa-file-alt" style="color: #4daafc;"></i> Documents</div>
+                    <div class="sidebar-item active"><i class="fas fa-folder-open" style="color: #e6c875;"></i> Media Directory</div>
+                </div>
+            </div>
+            
+            <!-- File Grid -->
+            <div class="content-area">
+                <div class="file-grid" id="file-grid">
+                    <div class="loading"><i class="fas fa-spinner fa-spin"></i> Scanning repository for files...</div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Image/Video Pop-up Viewer -->
+    <div class="modal" id="mediaModal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div id="modalContent"></div>
+    </div>
+
+    <script>
+        // GitHub API Configuration
+        const repo = 'Jaynilson123/jaynilsonlopes.github.io';
+        const folder = 'media';
+        const apiUrl = `https://api.github.com/repos/${repo}/contents/${folder}`;
+        
+        const fileGrid = document.getElementById('file-grid');
+        const modal = document.getElementById('mediaModal');
+        const modalContent = document.getElementById('modalContent');
+
+        // Automatically fetch and generate the file explorer
+        async function loadFiles() {
+            fileGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading files...</div>';
+            
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Could not access the GitHub folder.');
+                const files = await response.json();
+                
+                fileGrid.innerHTML = '';
+                
+                // Fixed filter: Only hides exact profile picture and any file with "resume" in the name
+                const mediaFiles = files.filter(file => {
+                    const fileName = file.name.toLowerCase();
+                    const isMedia = fileName.match(/\.(jpg|jpeg|png|gif|mp4)$/i);
+                    
+                    const isHidden = (fileName === 'image_d0d510.png') || fileName.includes('resume');
+                                     
+                    return isMedia && !isHidden;
+                });
+
+                if (mediaFiles.length === 0) {
+                    fileGrid.innerHTML = '<div class="loading">No files found. Upload some to your GitHub "media" folder!</div>';
+                    return;
+                }
+
+                mediaFiles.forEach(file => {
+                    const isVideo = file.name.endsWith('.mp4');
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    
+                    // Allow clicking to view full size
+                    div.onclick = () => openModal(file.download_url, isVideo);
+
+                    let previewHTML = '';
+                    if (isVideo) {
+                        previewHTML = `<i class="fas fa-file-video" style="font-size: 50px; color: #0078d4;"></i>`;
+                    } else {
+                        previewHTML = `<img src="media/${file.name}" alt="${file.name}" loading="lazy">`;
+                    }
+
+                    div.innerHTML = `
+                        <div class="file-icon">
+                            ${previewHTML}
+                        </div>
+                        <div class="file-name" title="${file.name}">${file.name}</div>
+                    `;
+                    fileGrid.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                fileGrid.innerHTML = `
+                    <div class="loading" style="color: #e74c3c;">
+                        <i class="fas fa-exclamation-triangle"></i> Failed to load files.<br><br>
+                        Make sure the "media" folder exists in your GitHub repository and has images in it.
+                    </div>`;
+            }
+        }
+
+        // Modal Controls
+        function openModal(url, isVideo) {
+            if (isVideo) {
+                modalContent.innerHTML = `<video controls autoplay src="${url}" style="max-width: 90%; max-height: 90%;"></video>`;
+            } else {
+                modalContent.innerHTML = `<img src="${url}">`;
+            }
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalContent.innerHTML = '';
+        }
+
+        // Click outside the image to close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Run the script immediately when the page loads
+        loadFiles();
+    </script>
 </body>
 </html>
